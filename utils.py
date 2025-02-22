@@ -7,7 +7,7 @@ import seaborn as sns
 import itertools
 import spectral
 import visdom
-import matplotlib.pyplot as plt导入 matplotlib 库中的 pyplot 模块作为 plt 。
+import matplotlib.pyplot as plt
 from scipy import io, misc
 import imageio
 import os
