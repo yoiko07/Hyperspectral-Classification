@@ -1,56 +1,56 @@
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-# -*- 编码：utf-8 -*-
 import random
-import numpy as np
+import numpy as np   将numpy导入为np
 from sklearn.metrics import confusion_matrix
 import sklearn.model_selection
 import seaborn as sns
 import itertools
 import spectral
 import visdom
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt导入 matplotlib 库中的 pyplot 模块作为 plt 。
 from scipy import io, misc
 import imageio
 import os
 import re
-import torch
+import torch   进口火炬
 
 def get_device(ordinal):
     # Use GPU ?
     if ordinal < 0:
-        print("Computation on CPU")
-        device = torch.device('cpu')
-    elif torch.cuda.is_available():
-        print("Computation on CUDA GPU device {}".format(ordinal))
+        print("Computation on CPU")在 CPU 上进行计算在 CPU 上进行计算
+        device = torch.device('cpu')设备 = torch.device('cpu设备 = torch.device('cpu
+    elif torch.cuda.is_available():否则，如果 `torch.cuda.is_available()` 返回 `True` ：
+        print("Computation on CUDA GPU device {}".format(ordinal))在 CUDA GPU 设备 {} 上进行计算。
         device = torch.device('cuda:{}'.format(ordinal))
-    else:
+    else:   其他:
         print("/!\\ CUDA was requested but is not available! Computation will go on CPU. /!\\")
-        device = torch.device('cpu')
-    return device
+        device = torch.device('cpu')设备 = torch.device('cpu
+    return device   返回的设备
 
 
 def open_file(dataset):
     _, ext = os.path.splitext(dataset)
-    ext = ext.lower()
-    if ext == '.mat':
-        # Load Matlab array
+    ext = ext.lower()   Ext = Ext .lower（）
+    if ext == '.mat':   如果ext == '.mat'：
+        # Load Matlab array   #加载Matlab数组
         return io.loadmat(dataset)
     elif ext == '.tif' or ext == '.tiff':
-        # Load TIFF file
+        # Load TIFF file   #加载TIFF文件
         return imageio.imread(dataset)
-    elif ext == '.hdr':
+    elif ext == '.hdr':   Elif ext == '.hdr'：
         img = spectral.open_image(dataset)
-        return img.load()
-    else:
+        return img.load()   返回img.load ()
+    else:   其他:
         raise ValueError("Unknown file format: {}".format(ext))
 
 def convert_to_color_(arr_2d, palette=None):
     """Convert an array of labels to RGB color-encoded image.
 
-    Args:
+    Args:   参数:
         arr_2d: int 2D array of labels
         palette: dict of colors used (label number -> RGB tuple)
 
-    Returns:
+    Returns:   返回:
         arr_3d: int 2D images of color-encoded labels in RGB format
 
     """
@@ -297,7 +297,8 @@ def metrics(prediction, target, ignored_labels=[], n_classes=None):
     Returns:
         accuracy, F1 score by class, confusion matrix
     """
-    ignored_mask = np.zeros(target.shape[:2], dtype=np.bool)
+    # ignored_mask = np.zeros(target.shape[:2], dtype=np.bool)
+    ignored_mask = np.zeros(target.shape[:2], dtype=bool)
     for l in ignored_labels:
         ignored_mask[target == l] = True
     ignored_mask = ~ignored_mask
