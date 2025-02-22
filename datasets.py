@@ -51,6 +51,11 @@ DATASETS_CONFIG = {
             'img': 'Botswana.mat',
             'gt': 'Botswana_gt.mat',
             }
+        'SA_case1_Iter6_denoised_82': {
+            'urls': [],  # 如果没有下载链接，留空即可
+            'img': '/kaggle/input/0222data/SA_case1_Iter6_denoised_82.mat',
+            'gt': '/kaggle/input/0222data/Salinas_gt.mat'
+            }
     }
 
 try:
